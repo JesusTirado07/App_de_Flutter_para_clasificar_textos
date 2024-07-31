@@ -1,4 +1,4 @@
-package com.example.clasificar_textos
+package com.example.flutter_application_4
 
 import io.flutter.embedding.android.FlutterActivity
 
