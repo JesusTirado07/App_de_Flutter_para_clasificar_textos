@@ -143,7 +143,6 @@ class _TFServingDemoState extends State<TFServingDemo> {
                       } else if (snapshot.hasError) {
                         return Text('${snapshot.error}');
                       }
-                      // By default, show a loading spinner.
                       return const CircularProgressIndicator();
                     },
                   ),
@@ -156,10 +155,8 @@ class _TFServingDemoState extends State<TFServingDemo> {
 
   Future<String> predict() async {
     if (Platform.isAndroid) {
-      // For Android
       _server = '10.0.2.2';
     } else {
-      // For iOS emulator, desktop and web platforms
       _server = '127.0.0.1';
     }
 
@@ -174,12 +171,10 @@ class _TFServingDemoState extends State<TFServingDemo> {
       }
     }
 
-    // Tokenize the input sentence.
     final inputWords = _inputSentenceController.text
         .toLowerCase()
         .replaceAll(RegExp('[^a-z ]'), '')
         .split(' ');
-    // Initialize with padding token
     _tokenIndices = List.filled(maxSentenceLength, 0);
     var i = 0;
     for (final w in inputWords) {
@@ -188,7 +183,6 @@ class _TFServingDemoState extends State<TFServingDemo> {
         i++;
       }
 
-      // Truncate the string if longer than maxSentenceLength.
       if (i >= maxSentenceLength - 1) {
         break;
       }
@@ -236,8 +230,6 @@ class _TFServingDemoState extends State<TFServingDemo> {
           tensorShape: inputTensorShape,
           intVal: _tokenIndices);
 
-      // If you train your own model, make sure to update the input and output
-      // tensor names.
       const inputTensorName = 'input_3';
       const outputTensorName = 'dense_5';
       PredictRequest request = PredictRequest(
